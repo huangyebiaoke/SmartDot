@@ -11,6 +11,7 @@ public class Brain {
 
     public Brain(int size) {
         directions = new Vector[size];
+        randomize();
     }
     private void randomize(){
         for (int i = 0; i < directions.length; i++) {

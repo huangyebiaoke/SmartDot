@@ -1,6 +1,7 @@
 package cn.madeai;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Created by <a href="mailto:huangyebiaoke@outlook.com">huang</a> on 2020/11/24 15:51
@@ -54,12 +55,15 @@ public class Population {
     }
 
     void calculateFitnessSum(){
+        fitnessSum=0;
         for (int i = 0; i < dots.length; i++) {
             fitnessSum+=dots[i].fitness;
         }
     }
 
     Dot selectParent(){
+//        rand between 0-1
+//        double rand=new Random((int)fitnessSum).nextDouble();
         double rand=Math.random()*fitnessSum;
         double runningFitnessSum=0;
         for (int i = 0; i < dots.length; i++) {
@@ -68,6 +72,7 @@ public class Population {
                 return dots[i];
             }
         }
+        //            System.out.println("runningFitnessSum:"+runningFitnessSum+" randFitnessSum:"+rand);
         return null;
     }
 

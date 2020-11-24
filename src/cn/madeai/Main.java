@@ -11,10 +11,12 @@ import java.util.TimerTask;
  * Created by <a href="mailto:huangyebiaoke@outlook.com">huang</a> on 2020/11/24 15:51
  */
 public class Main extends JFrame implements KeyListener {
-    Vector goal=new Vector(Config.width/2,0+Config.goalRadius);
+    public static Vector goal=new Vector(Config.width/2,0+Config.goalRadius);
     Population population;
-    boolean exit=false;
+//    boolean exit=false;
     public Main() throws HeadlessException {
+        population=new Population(1000);
+
         this.setTitle("SmartDot");
         this.setBounds(300,300,Config.width,Config.height);
         this.setVisible(true);
@@ -25,18 +27,17 @@ public class Main extends JFrame implements KeyListener {
         DrawPanel dp=new DrawPanel();
         this.getContentPane().add(dp);
 
-        population=new Population(1000);
-
         Timer timer=new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 dp.repaint();
-                if (exit){
-                    timer.cancel();
-                }
+//                if (exit){
+//                    timer.cancel();
+//                }
+//                30fps
             }
-        },0,40);
+        },0,1000/30);
 
 
     }
@@ -78,6 +79,7 @@ public class Main extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode()==KeyEvent.VK_SPACE){
+//            todo: pause the game
 
         }
     }

@@ -16,7 +16,7 @@ public class Dot {
     Brain brain;
 
     public Dot() {
-        brain=new Brain(1000);
+        brain=new Brain(400);
         position = new Vector(Config.width/2,Config.height-Config.dotRadius-Config.barHeight);
         accelerate=new Vector(0,0);
         velocity=new Vector(0,0);
@@ -32,6 +32,8 @@ public class Dot {
         velocity.add(accelerate);
         velocity.limit(5);
         position.add(velocity);
+//        position.add(accelerate);
+//        System.out.println(position.x+" "+position.y);
     }
 
     public void show(Graphics g){
@@ -42,9 +44,9 @@ public class Dot {
     public void update(){
         if (!dead&&!reachGoal){
             move();
-            if (position.x<2|| position.y<2|| position.x>Config.width-2|| position.y>Config.height-2){
+            if (position.x<Config.dotRadius|| position.y<Config.dotRadius|| position.x>Config.width-Config.dotRadius-16|| position.y>Config.height-Config.dotRadius){
                 dead=true;
-            }else if (Vector.dist(position,new Vector(2.0,2.0))<Config.dotRadius+Config.dotRadius){
+            }else if (Vector.dist(position,Main.goal)<Config.dotRadius+Config.dotRadius){
                 reachGoal=true;
             }
 //            todo: add some obstacles
@@ -54,7 +56,7 @@ public class Dot {
         if (reachGoal){
             fitness=1/16.0+10000/Math.pow(brain.step,2);
         }else {
-            double distanceToGoal=Vector.dist(position,new Vector(2.0,2.0));
+            double distanceToGoal=Vector.dist(position,Main.goal);
             fitness=1/ Math.pow(distanceToGoal,2);
         }
     }

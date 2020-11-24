@@ -17,7 +17,9 @@ public class Dot {
 
     public Dot() {
         brain=new Brain(1000);
-        this.position = new Vector(Config.width/2,Config.height-Config.dotRadius);
+        position = new Vector(Config.width/2,Config.height-Config.dotRadius-Config.barHeight);
+        accelerate=new Vector(0,0);
+        velocity=new Vector(0,0);
     }
 
     public void move(){
@@ -34,7 +36,7 @@ public class Dot {
 
     public void show(Graphics g){
         g.setColor(isBest?Color.CYAN:Color.BLACK);
-        g.drawOval((int)position.x,(int)position.y,Config.dotRadius*2,Config.dotRadius*2);
+        g.fillOval((int)position.x-Config.dotRadius,(int)position.y-Config.dotRadius,Config.dotRadius*2,Config.dotRadius*2);
     }
 
     public void update(){

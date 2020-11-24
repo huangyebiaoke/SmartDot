@@ -11,6 +11,7 @@ public class Population {
     int generation=1;
 //    the index of best dot in dots arr;
     int bestDot=0;
+//    the bestDot's step
     int minStep=1000;
 
     public Population(int size) {
@@ -20,13 +21,15 @@ public class Population {
         }
     }
 
-    public void show(Graphics g){
-        for (int i = 0; i < dots.length; i++) {
+    void show(Graphics g){
+        for (int i = 1; i < dots.length; i++) {
             dots[i].show(g);
         }
+//        avoid the bestDot covered by other dots
+        dots[0].show(g);
     }
 
-    public void update(){
+    void update(){
         for (int i = 0; i < dots.length; i++) {
             if (dots[i].brain.step>minStep){
                 dots[i].dead=true;
@@ -35,13 +38,13 @@ public class Population {
             }
         }
     }
-    public void calculateFitness(){
+    void calculateFitness(){
         for (int i = 0; i < dots.length; i++) {
             dots[i].calculateFitness();
         }
     }
 
-    public boolean isAllDotsDead(){
+    boolean isAllDotsDead(){
         for (int i = 0; i < dots.length; i++) {
             if (!dots[i].dead&&!dots[i].reachGoal){
                 return false;
@@ -50,10 +53,56 @@ public class Population {
         return true;
     }
 
-    public void calculateFitnessSum(){
+    void calculateFitnessSum(){
         for (int i = 0; i < dots.length; i++) {
             fitnessSum+=dots[i].fitness;
         }
+    }
+
+    Dot selectParent(){
+        double rand=Math.random()*fitnessSum;
+        double runningFitnessSum=0;
+        for (int i = 0; i < dots.length; i++) {
+            runningFitnessSum+=dots[i].fitness;
+            if (runningFitnessSum>rand){
+                return dots[i];
+            }
+        }
+        return null;
+    }
+
+    void mutateAllBabies(){
+        for (int i = 0; i < dots.length; i++) {
+            dots[i].brain.mutate();
+        }
+    }
+    void setBestDot(){
+        double maxFitness=0;
+        for (int i = 0; i < dots.length; i++) {
+            if (dots[i].fitness>maxFitness){
+                maxFitness=dots[i].fitness;
+                bestDot=i;
+            }
+        }
+        if (dots[bestDot].reachGoal){
+            minStep=dots[bestDot].brain.step;
+            System.out.println("minStep:"+minStep);
+        }
+    }
+
+    void naturalSelection(){
+        Dot[] babyDots=new Dot[dots.length];
+        setBestDot();
+        calculateFitnessSum();
+
+        babyDots[0]=dots[bestDot].cloneBaby();
+        babyDots[0].isBest=true;
+        for (int i = 1; i < babyDots.length; i++) {
+            Dot parent=selectParent();
+            babyDots[i]=parent.cloneBaby();
+        }
+        dots=babyDots.clone();
+        generation++;
     }
 
 

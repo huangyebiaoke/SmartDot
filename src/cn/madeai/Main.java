@@ -11,6 +11,8 @@ import java.util.TimerTask;
  * Created by <a href="mailto:huangyebiaoke@outlook.com">huang</a> on 2020/11/24 15:51
  */
 public class Main extends JFrame implements KeyListener {
+    Vector goal=new Vector(Config.width/2,0+Config.goalRadius);
+    Population population;
     boolean exit=false;
     public Main() throws HeadlessException {
         this.setTitle("SmartDot");
@@ -22,6 +24,9 @@ public class Main extends JFrame implements KeyListener {
         this.setLocationRelativeTo(null);
         DrawPanel dp=new DrawPanel();
         this.getContentPane().add(dp);
+
+        population=new Population(1000);
+
         Timer timer=new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -42,12 +47,27 @@ public class Main extends JFrame implements KeyListener {
 //            super.paint(g);
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
+//            paint goal
+            g.setColor(Color.RED);
+            g.fillOval((int)goal.x-Config.goalRadius,(int)goal.y-Config.goalRadius,Config.goalRadius*2,Config.goalRadius*2);
+
+            if (population.isAllDotsDead()){
+                population.calculateFitness();
+                population.naturalSelection();
+                population.mutateAllBabies();
+            }else{
+                population.update();
+                population.show(g);
+            }
         }
     }
 
     public static void main(String[] args) {
         Main main=new Main();
         main.addKeyListener(main);
+//        Vector a=new Vector(1,2);
+//        a.add(new Vector(2,2));
+//        System.out.println(a.x+" "+a.y);
     }
 
     @Override

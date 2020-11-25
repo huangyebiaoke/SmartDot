@@ -7,10 +7,10 @@
 This project is the homework of AI course. Mainly use **Genetic Algorithm** to achieve a game called **smart dot**.
 
 #### Demonstration1(without obstacle)
-<video src="./doc/1.mp4" poster="./doc/1.png"></video>
+[![Watch the video](./doc/1.png)](http://pan.madeai.cn/?/video/smart-dot/1.mp4)
 
 #### Demonstration2(with 2 obstacles)
-<video src="./doc/2.mp4" poster="./doc/2.png"></video>
+[![Watch the video](./doc/2.png)](http://pan.madeai.cn/?/video/smart-dot/2.mp4)
 
 #### Summary
 ![summary-picture](./doc/summary-picture.svg)

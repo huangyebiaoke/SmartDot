@@ -46,17 +46,23 @@ public class Dot {
             move();
             if (position.x<Config.dotRadius|| position.y<Config.dotRadius|| position.x>Config.width-Config.dotRadius-16|| position.y>Config.height-Config.dotRadius){
                 dead=true;
-            }else if (Vector.dist(position,Main.goal)<Config.dotRadius+Config.dotRadius){
+            }else if (Vector.dist(position,Config.goalPosition)<Config.dotRadius+Config.dotRadius){
                 reachGoal=true;
             }
 //            todo: add some obstacles
+            for (int[] obs:Config.obstacles) {
+                if (position.x>obs[0]-Config.dotRadius&&position.x<obs[2]+Config.dotRadius&&position.y>obs[1]-Config.dotRadius&&position.y<obs[3]+Config.dotRadius){
+                    dead=true;
+                }
+            }
         }
     }
     public void calculateFitness(){
         if (reachGoal){
+//            weight between step and distance to goal, focus on witch item on your opinion
             fitness=1/16.0+10000/Math.pow(brain.step,2);
         }else {
-            double distanceToGoal=Vector.dist(position,Main.goal);
+            double distanceToGoal=Vector.dist(position,Config.goalPosition);
             fitness=1/ Math.pow(distanceToGoal,2);
         }
     }

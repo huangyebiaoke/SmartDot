@@ -11,7 +11,7 @@ import java.util.TimerTask;
  * Created by <a href="mailto:huangyebiaoke@outlook.com">huang</a> on 2020/11/24 15:51
  */
 public class Main extends JFrame implements KeyListener {
-    public static Vector goal=new Vector(Config.width/2,0+Config.goalRadius);
+//    public static Vector goal=new Vector(Config.width/2,0+Config.goalRadius);
     Population population;
 //    boolean exit=false;
     public Main() throws HeadlessException {
@@ -45,12 +45,20 @@ public class Main extends JFrame implements KeyListener {
     class DrawPanel extends JPanel{
         @Override
         public void paint(Graphics g) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 //            super.paint(g);
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
 //            paint goal
             g.setColor(Color.RED);
-            g.fillOval((int)goal.x-Config.goalRadius,(int)goal.y-Config.goalRadius,Config.goalRadius*2,Config.goalRadius*2);
+            g.fillOval((int)Config.goalPosition.x-Config.goalRadius,(int)Config.goalPosition.y-Config.goalRadius,Config.goalRadius*2,Config.goalRadius*2);
+//            paint some info massage
+            g.drawString("Gen:"+Population.generation+", prev min step:"+Population.minStep,0,10);
+//            paint obstacles
+            for (int[] obs:Config.obstacles) {
+                g.fillRect(obs[0],obs[1],obs[2]-obs[0],obs[3]-obs[1]);
+            }
 
             if (population.isAllDotsDead()){
                 population.calculateFitness();
@@ -80,7 +88,8 @@ public class Main extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode()==KeyEvent.VK_SPACE){
 //            todo: pause the game
-
+            Config.goalPosition.x=Math.random()*Config.width;
+            Config.goalPosition.y=0+Config.goalRadius+Math.random()*50;
         }
     }
 

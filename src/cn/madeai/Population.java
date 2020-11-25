@@ -1,6 +1,9 @@
 package cn.madeai;
 
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -9,11 +12,11 @@ import java.util.Random;
 public class Population {
     Dot[] dots;
     double fitnessSum=0;
-    int generation=1;
+    public static int generation=1;
 //    the index of best dot in dots arr;
     int bestDot=0;
 //    the bestDot's step
-    int minStep=1000;
+    public static int minStep=1000;
 
     public Population(int size) {
         this.dots = new Dot[size];
@@ -55,6 +58,7 @@ public class Population {
     }
 
     void calculateFitnessSum(){
+//        set fitnessSum to zero, or it will be max
         fitnessSum=0;
         for (int i = 0; i < dots.length; i++) {
             fitnessSum+=dots[i].fitness;
@@ -91,7 +95,14 @@ public class Population {
         }
         if (dots[bestDot].reachGoal){
             minStep=dots[bestDot].brain.step;
-            System.out.println("minStep:"+minStep);
+//            if (generation<50){
+//                try {
+//                    WriteFile.write("D:\\2.txt",minStep+"\n");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            System.out.println("minStep:"+minStep);
         }
     }
 
@@ -109,6 +120,4 @@ public class Population {
         dots=babyDots.clone();
         generation++;
     }
-
-
 }

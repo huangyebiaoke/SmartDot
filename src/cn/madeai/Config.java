@@ -9,4 +9,9 @@ public class Config {
     final static int height=600;
     final static int dotRadius=4;
     final static int goalRadius=5;
+    static Vector goalPosition=new Vector(Config.width/2,0+Config.goalRadius);
+    final static int[][] obstacles={
+            {0,200-barHeight,400,200-barHeight+20},
+            {200,400-barHeight,600,400-barHeight+20}
+    };
 }

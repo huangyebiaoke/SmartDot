@@ -1,7 +1,6 @@
-### Attention
+#### <font color="red">Attention</font>
 **The problem is to figure out the max or min value of the function, I'm misunderstanding the problem, please click [MaxFunVal](https://github.com/huangyebiaoke/MaxFunVal)**
-### About the Project
-#### RepoName
+#### Project Name
 **SmartDot**
 #### Description
 This project is the homework of AI course. Mainly use **Genetic Algorithm** to achieve a game called **smart dot**.
